@@ -584,6 +584,7 @@
             max-width: 100%;
             height: auto;
         }
+        
     </style>
     </head>
 
@@ -1305,39 +1306,43 @@
         </div>
 
         <!-- JS -->
-        <script>
-            function showMediaTab(event, tabId) {
-                // Remove 'active' from all buttons
-                document.querySelectorAll('.media-tab-btn').forEach(btn => btn.classList.remove('active'));
+      <script>
+    function showMediaTab(event, tabId) {
+        // Remove 'active' class from all tab buttons
+        document.querySelectorAll('.media-tab-btn')?.forEach(btn => btn.classList.remove('active'));
 
-                if (event) {
-                    event.target.classList.add('active');
-                } else {
-                    document.querySelector(".media-tab-btn[onclick*='all']").classList.add('active');
-                }
+        // Add 'active' class to clicked tab button
+        if (event) {
+            event.target.classList.add('active');
+        } else {
+            document.querySelector(".media-tab-btn[onclick*='all']")?.classList.add('active');
+        }
 
-                // Hide all tab contents
-                document.querySelectorAll('.media-tab-content').forEach(tab => tab.classList.remove('active'));
+        // Hide all tab content sections
+        document.querySelectorAll('.media-tab-content').forEach(tab => tab.classList.remove('active'));
 
-                // If "all", combine content dynamically
-                if (tabId === 'all') {
-                    let combined = '';
-                    ['images', 'videos', 'reels', 'logos', 'banners', 'graphics'].forEach(id => {
-                        const tab = document.getElementById(id);
-                        combined += tab.innerHTML;
-                    });
-                    document.getElementById('all').innerHTML = combined;
-                }
+        // If "all" tab is selected, merge all media content
+        if (tabId === 'all') {
+            let combined = '';
+            ['images', 'videos', 'reels', 'logos', 'banners', 'graphics'].forEach(id => {
+                const tab = document.getElementById(id);
+                if (tab) combined += tab.innerHTML;
+            });
+            const allTab = document.getElementById('all');
+            allTab.innerHTML = combined;
+        }
 
-                // Show selected tab
-                document.getElementById(tabId).classList.add('active');
-            }
+        // Show selected tab
+        document.getElementById(tabId).classList.add('active');
+    }
 
-            // ✅ Show All by default when page loads
-            window.onload = function () {
-                showMediaTab(null, 'all');
-            };
-        </script>
+    // ✅ On page load, show all media types by default
+    window.onload = function () {
+        showMediaTab(null, 'all');
+    };
+</script>
+
+        
 
 
 
